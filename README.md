@@ -46,7 +46,7 @@ Both projects are good work and they cover cards this one does not. The table is
 | macOS | Sequoia 15 and Tahoe 26 for the driver; the native menu on Tahoe 26.7.1 (25G241) | "tested in the macOS 15 installer" | macOS 15.2 to 15.x only |
 | Measured | 190.8 / 174.8 Mb/s, 16 ms idle ping (0.9.0, Ethernet front end); native front end holds the link, auto-joins at boot | not stated on the page | 83 / 44 Mb/s on a G713PV |
 | 802.11 | HT/VHT at 80 MHz; no ax yet | n/ac/ax, 40/80 MHz | as SimpleMtkWlan |
-| WPA2-PSK | code passes the host tests; **not yet joined on air** (only an open network here) | yes | yes |
+| WPA2-PSK | code passes the host tests; joined on air by a tester on an RZ717 board (not by me, only an open network here) | yes | yes |
 | Licence | ISC (plus Clear BSD parts) | GPLv2 | GPLv2 |
 
 On an MT7925 use this driver; with the native front end it behaves like Apple's own Wi-Fi. On an MT7921 or MT7922 use
@@ -58,6 +58,7 @@ Everything below was measured on one laptop (Legion 5 15IAX10, OpenCore 1.0.8) o
 
 | Version | What it adds | Tested on | Result |
 |---|---|---|---|
+| 0.12.1 | core ops v5 for the native front end: real rate, MCS, streams, width and guard interval; `set_country`; plus everything in 0.12.0 (restart and power-off quiesce, attach recovery, link supervisor, 128-network scan cache, join ROC held through WPA2) | macOS 26.7.1 (25G241) | joins at boot with MtkWlanNative 0.4.13; macOS shows 11ac, 80 MHz, MCS 9, 2 streams, 866 Mbit/s (the negotiated maximum, no TX status records on this link) |
 | 0.11.0 | core ops v4: `set_mac` changes the station address after bring-up (the firmware station interface is re-added with it), so a native front end can apply the per-network private address macOS picks; `MtkMacAddr`, `MtkMacChanges` properties | macOS 26.7.1 (25G241) | with the native front end MtkWlanNative 0.4.9: Wi-Fi menu, macOS-driven joins with a private address, auto-join at boot, link held for ten quiet minutes; Ethernet front end unchanged |
 | 0.10.0 | core ops v3 (`set_mode`, `get_bss`, `get_channels`, `tx_bytes`), front-end selection (`MtkFrontEnd`: Ethernet, native front end optional) with Ethernet fallback, `mtkwifi` shows the front end | macOS 26.7.1 (25G241) | 192.7 Mb/s down, 134.6 Mb/s up, 16 ms idle ping, 0 % loss; same auto join at boot |
 | 0.9.0 | scan and join machines, `mtkwifi` tool, saved networks, auto join at boot, WPA2-PSK code | macOS 26.7.1 (25G241) | 190.8 Mb/s down, 174.8 Mb/s up, 16 ms idle ping, 0 % loss; joins the network by itself at boot |
@@ -66,7 +67,7 @@ Everything below was measured on one laptop (Legion 5 15IAX10, OpenCore 1.0.8) o
 | 0.6.0 | HT/VHT association, firmware rate control | macOS 15.4.1 Recovery | 47.4 / 9.2 Mb/s |
 | 0.5.0 | first join, Ethernet interface, DHCP | macOS 15.4.1 Recovery | Safari and an Ookla speedtest: 19.4 / 9.6 Mb/s |
 
-**WPA2 is not proven on air yet.** The WPA2-PSK code (4-way handshake, group rekey, key install, CCMP replay check) passes the host tests in `tests/` (standard test vectors plus simulated handshakes, every derived value checked against an independent Python oracle), but I have not joined a real WPA2 network with it: the only network where I live is an open one. Until this paragraph changes, treat WPA2 as untested. If you try it, open an issue with the result either way.
+**WPA2 on air:** the WPA2-PSK code passes the host tests in `tests/` (standard test vectors plus simulated handshakes, every derived value checked against an independent Python oracle). I have not joined a WPA2 network on the Legion myself, because the only network where I live is an open one. A tester joined a WPA/WPA2 Personal network from the Wi-Fi menu on an AM5 desktop with an AMD RZ717 card (MtkWlan 0.12.1 and MtkWlanNative 0.4.13), with auto-join at boot and a DHCP lease ([#3](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi-native/issues/3)). More reports are welcome.
 
 ## What it can't do
 
