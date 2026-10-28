@@ -18,7 +18,7 @@ There are three kexts for the one card: install the first two together for Wi-Fi
 | Repo | What it does | Needs |
 |---|---|---|
 | [mt7925-hackintosh-wifi](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi) (this one) | the driver: firmware, DMA, scan, join, WPA2, data path; on its own macOS sees an Ethernet port | nothing (no Lilu) |
-| [mt7925-hackintosh-wifi-native](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi-native) | the native front end: macOS's own Wi-Fi menu, settings pane, saved networks, auto-join | this driver, macOS 26.7.1 (25G241) |
+| [mt7925-hackintosh-wifi-native](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi-native) | the native front end: macOS's own Wi-Fi menu, settings pane, saved networks, auto-join | this driver, macOS 26.7.1 (25G241) or 26.7.2 (25G332) |
 | [mt7925-hackintosh-bluetooth](https://github.com/watchthelight-labs/mt7925-hackintosh-bluetooth) | loads the Bluetooth firmware of the same card (USB `0489:E111` and the other MT7925 ids) | BlueToolFixup; on Tahoe also [LegionBtFix](https://github.com/watchthelight-labs/LegionBtFix) |
 
 The quickest install is the bundle on the [releases page](../../releases): both Wi-Fi kexts, the licences and an
@@ -43,7 +43,7 @@ Both projects are good work and they cover cards this one does not. The table is
 |---|---|---|---|
 | Cards | MT7925, RZ717 | MT7921, MT7921K/RZ608, MT7922, RZ616 | MT7922/RZ616 (pengubow), MT7921/RZ608 (mnnobre) |
 | How you join a network | macOS's own Wi-Fi menu and System Settings; networks saved by macOS, auto-join at boot, private address per network | the card is an Ethernet port; `mtkwifi join` on the command line, HeliPort "not tested yet", or the SimpleMTK menu-bar client some forks ship | macOS's own Wi-Fi menu (experimental) |
-| macOS | Sequoia 15 and Tahoe 26 for the driver; the native menu on Tahoe 26.7.1 (25G241) | "tested in the macOS 15 installer" | macOS 15.2 to 15.x only |
+| macOS | Sequoia 15 and Tahoe 26 for the driver; the native menu on Tahoe 26.7.1 (25G241) and 26.7.2 (25G332) | "tested in the macOS 15 installer" | macOS 15.2 to 15.x only |
 | Measured | 190.8 / 174.8 Mb/s, 16 ms idle ping (0.9.0, Ethernet front end); native front end holds the link, auto-joins at boot | not stated on the page | 83 / 44 Mb/s on a G713PV |
 | 802.11 | HT/VHT at 80 MHz; no ax yet | n/ac/ax, 40/80 MHz | as SimpleMtkWlan |
 | WPA2-PSK | code passes the host tests; joined on air by a tester on an RZ717 board (not by me, only an open network here) | yes | yes |
@@ -88,7 +88,7 @@ The bundle zip from the [releases](../../releases) holds `MtkWlan.kext`, `MtkWla
 1. Get `MtkWlan.kext` from the [releases](../../releases) (the release zip carries `LICENSE`, `NOTICE.md` and
    `LICENSES/` because the licences require them next to the binary), or build it (below). For the Wi-Fi menu also get
    `MtkWlanNative.kext` from [its releases](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi-native/releases)
-   (macOS 26.7.1 build 25G241 only; on Sequoia use the driver alone with the `mtkwifi` tool).
+   (macOS 26.7.1 build 25G241 and 26.7.2 build 25G332 only; on Sequoia use the driver alone with the `mtkwifi` tool).
 2. Copy the kext(s) to `EFI/OC/Kexts/` and add them to `config.plist`, `Kernel > Add`, in this order:
 
    ```
