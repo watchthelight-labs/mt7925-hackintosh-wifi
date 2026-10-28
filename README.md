@@ -197,7 +197,7 @@ sudo bash tools/build-toolchain.sh   # clang, Apple ld64 (cctools-port), libdisp
 make                                 # out/MtkWlan.kext
 ```
 
-The firmware in `firmware/` is checked against `firmware/SHA256SUMS` and embedded in the binary. The macOS build is reproducible (the same sources with the same Apple clang 17.0.0, clang-1700.0.13.5, give the same binary). The 0.10.0 release zip holds the binary from the tested boot (sha256 `00f68f99d8e6ab2ea4cc3ba36f7b44a7d7bcd9fc32440ecc80674a0b62de3394`). It was built a few minutes before the last 0.10.0 edit (`MtkNet.cpp` publishing the `MtkFrontEndActive` registry property), so a clean build of this tag gives `a1645f7e39749d13c13adb302518cf0e63bbc29e7fe60dc198c08e587689bb90` instead; the string tables differ only by that property name. The next boot uses the clean build.
+The firmware in `firmware/` is checked against `firmware/SHA256SUMS` and embedded in the binary. The macOS build is reproducible (the same sources with the same Apple clang 17.0.0, clang-1700.0.13.5, give the same binary). The 0.10.0 release zip holds the binary from the tested boot (sha256 `00f68f99d8e6ab2ea4cc3ba36f7b44a7d7bcd9fc32440ecc80674a0b62de3394`). It was built a few minutes before the last 0.10.0 edit (`MtkNet.cpp` publishing the `MtkFrontEndActive` registry property), so a clean build of this tag gives `a1645f7e39749d13c13adb302518cf0e63bbc29e7fe60dc198c08e587689bb90` instead; the string tables differ only by that property name.
 
 ## How it works
 
