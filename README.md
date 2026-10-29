@@ -37,13 +37,13 @@ The quickest install is the bundle on the [releases page](../../releases): both 
 ## Compared with SimpleMtkWlan and AirportMtkWlan
 
 Both projects are good work and they cover cards this one does not. The table is from their READMEs as of
-2026-10-20:
+2026-10-29:
 
-| | mt7925-hackintosh-wifi + -native | SimpleMtkWlan (pengubow and forks) | AirportMtkWlan (pengubow, mnnobre) |
+| | mt7925-hackintosh-wifi + -native | SimpleMtkWlan (pengubow and forks) | AirportMtkWlan (pengubow, mnnobre, Arxusion) |
 |---|---|---|---|
-| Cards | MT7925, RZ717 | MT7921, MT7921K/RZ608, MT7922, RZ616 | MT7922/RZ616 (pengubow), MT7921/RZ608 (mnnobre) |
+| Cards | MT7925, RZ717 | MT7921, MT7921K/RZ608, MT7922, RZ616 | MT7922/RZ616 (pengubow), MT7921/RZ608 (mnnobre), MT7921, RZ608 and MT7922/RZ616 ([Arxusion](https://github.com/Arxusion/AirportMtkWlan)) |
 | How you join a network | macOS's own Wi-Fi menu and System Settings; networks saved by macOS, auto-join at boot, private address per network | the card is an Ethernet port; `mtkwifi join` on the command line, HeliPort "not tested yet", or the SimpleMTK menu-bar client some forks ship | macOS's own Wi-Fi menu (experimental) |
-| macOS | Sequoia 15 and Tahoe 26 for the driver; the native menu on Tahoe 26.7.1 (25G241) and 26.7.2 (25G332) | "tested in the macOS 15 installer" | macOS 15.2 to 15.x only |
+| macOS | Sequoia 15 and Tahoe 26 for the driver; the native menu on Tahoe 26.7.1 (25G241) and 26.7.2 (25G332) | "tested in the macOS 15 installer" | macOS 15.2 to 15.x; the Arxusion line (v1.5.1) says Tahoe 26 |
 | Measured | 190.8 / 174.8 Mb/s, 16 ms idle ping (0.9.0, Ethernet front end); native front end holds the link, auto-joins at boot | not stated on the page | 83 / 44 Mb/s on a G713PV |
 | 802.11 | HT/VHT at 80 MHz; no ax yet | n/ac/ax, 40/80 MHz | as SimpleMtkWlan |
 | WPA2-PSK | code passes the host tests; joined on air by a tester on an RZ717 board (not by me, only an open network here) | yes | yes |
