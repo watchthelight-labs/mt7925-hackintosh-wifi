@@ -3,7 +3,7 @@
 This zip holds the two kexts that give an MT7925 (Filogic 360, PCI `14C3:7925`, or the AMD RZ717 `14C3:0717`) real Wi-Fi
 on macOS: `MtkWlan.kext` (the driver) and `MtkWlanNative.kext` (macOS's own Wi-Fi menu on top of it). Licences and
 notices are in each folder and must stay with the kexts. Sources, status and the comparison with other MediaTek drivers:
-https://github.com/watchthelight-labs/mt7925-hackintosh-wifi
+https://github.com/watchthelight-labs/WTLMtkWireless
 
 1. Copy `MtkWlan.kext` and `MtkWlanNative.kext` into `EFI/OC/Kexts/`.
 2. Add both to `config.plist` under `Kernel > Add`, MtkWlan first (the second links against it). OCAT, ProperTree's
@@ -32,4 +32,4 @@ does not come up, the driver falls back to that Ethernet port by itself, so you 
 Check after the reboot: `kmutil showloaded | grep Mtk` lists both, `ioreg -r -c MtkWlan -l -w0 | grep MtkState` says
 `pass`. Problems: run `tools/mtk-report.sh` from the repo and open an issue with the archive.
 
-Bluetooth on the same card is a third kext: https://github.com/watchthelight-labs/mt7925-hackintosh-bluetooth
+Bluetooth on the same card is a third kext: https://github.com/watchthelight-labs/WTLMtkBluetooth

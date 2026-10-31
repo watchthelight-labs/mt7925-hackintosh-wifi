@@ -1,11 +1,13 @@
-# MtkWlan: MediaTek MT7925 Wi-Fi driver for macOS Hackintosh
+# WTLMtkWireless: MediaTek MT7925 Wi-Fi driver for macOS Hackintosh
+
+Renamed from `mt7925-hackintosh-wifi` on 2026-10-31; the kext is still `MtkWlan.kext`, so existing OpenCore configs keep working. Old links redirect here.
 
 Wi-Fi for the MediaTek MT7925 (Filogic 360, Wi-Fi 7, PCI `14C3:7925`, also the AMD RZ717 `14C3:0717`) on a
 Hackintosh: a macOS kext for OpenCore on macOS Sequoia 15 and Tahoe 26. It brings the card up,
 loads its firmware, scans, joins open and WPA2-PSK networks and moves traffic at 190 Mb/s down, 175 Mb/s up on a
 5 GHz network. macOS has no driver for this card; the other community projects that target it are in the credits.
 
-With the second kext, [mt7925-hackintosh-wifi-native](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi-native),
+With the second kext, [WTLWifiMenu](https://github.com/watchthelight-labs/WTLWifiMenu),
 macOS treats the card as a real Wi-Fi card: the Wi-Fi icon in the menu bar, the Wi-Fi pane in System Settings, saved
 networks, auto-join at boot and a private address per network, without a menu-bar client app or the command line.
 SimpleMtkWlan and its forks show the card as Ethernet and join networks through a client app or a tool (comparison
@@ -17,21 +19,21 @@ There are three kexts for the one card: install the first two together for Wi-Fi
 
 | Repo | What it does | Needs |
 |---|---|---|
-| [mt7925-hackintosh-wifi](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi) (this one) | the driver: firmware, DMA, scan, join, WPA2, data path; on its own macOS sees an Ethernet port | nothing (no Lilu) |
-| [mt7925-hackintosh-wifi-native](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi-native) | the native front end: macOS's own Wi-Fi menu, settings pane, saved networks, auto-join | this driver, macOS 26.7.1 (25G241) or 26.7.2 (25G332) |
-| [mt7925-hackintosh-bluetooth](https://github.com/watchthelight-labs/mt7925-hackintosh-bluetooth) | loads the Bluetooth firmware of the same card (USB `0489:E111` and the other MT7925 ids) | BlueToolFixup; on Tahoe also [LegionBtFix](https://github.com/watchthelight-labs/LegionBtFix) |
+| [WTLMtkWireless](https://github.com/watchthelight-labs/WTLMtkWireless) (this one) | the driver: firmware, DMA, scan, join, WPA2, data path; on its own macOS sees an Ethernet port | nothing (no Lilu) |
+| [WTLWifiMenu](https://github.com/watchthelight-labs/WTLWifiMenu) | the native front end: macOS's own Wi-Fi menu, settings pane, saved networks, auto-join | this driver, macOS 26.7.1 (25G241) or 26.7.2 (25G332) |
+| [WTLMtkBluetooth](https://github.com/watchthelight-labs/WTLMtkBluetooth) | loads the Bluetooth firmware of the same card (USB `0489:E111` and the other MT7925 ids) | BlueToolFixup; on Tahoe also [WTLLegionBtFix](https://github.com/watchthelight-labs/WTLLegionBtFix) |
 
 The quickest install is the bundle on the [releases page](../../releases): both Wi-Fi kexts, the licences and an
 `INSTALL.md` with the exact `config.plist` lines. A full EFI that uses all three is
-[Legion-5-15IAX10-OpenCore](https://github.com/watchthelight-labs/Legion-5-15IAX10-OpenCore).
+[WTLLegionOpenCore](https://github.com/watchthelight-labs/WTLLegionOpenCore).
 
 ## Which cards
 
 | Card | PCI id | State |
 |---|---|---|
 | MediaTek MT7925 (Filogic 360), Lenovo Legion 5 15IAX10 and other 2025 laptops | `14C3:7925`, subsystem `17AA:E0FF` | tested daily, every number in this README comes from it |
-| AMD RZ717 (MT7925 on AM5 desktop boards: ASRock X870 Steel Legend WiFi and others) | `14C3:0717` | matched since 0.11.1; Bluetooth confirmed on an X870, Wi-Fi with the native front end on another AM5 board ([native #3](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi-native/issues/3)) |
-| Other MT7925 boards (different subsystem ids) | `14C3:7925` | should work; an ASUS ROG Strix B860-G desktop reports Wi-Fi and Bluetooth working on 26.7.2 ([#4](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi/issues/4)); report either way |
+| AMD RZ717 (MT7925 on AM5 desktop boards: ASRock X870 Steel Legend WiFi and others) | `14C3:0717` | matched since 0.11.1; Bluetooth confirmed on an X870, Wi-Fi with the native front end on another AM5 board ([native #3](https://github.com/watchthelight-labs/WTLWifiMenu/issues/3)) |
+| Other MT7925 boards (different subsystem ids) | `14C3:7925` | should work; an ASUS ROG Strix B860-G desktop reports Wi-Fi and Bluetooth working on 26.7.2 ([#4](https://github.com/watchthelight-labs/WTLMtkWireless/issues/4)); report either way |
 | MT7921, MT7921K (RZ608), MT7922 (RZ616), MT7920, MT7902 | `14C3:7961`, `0608`, `7922`, `0616`, ... | **not supported**: different firmware and a different init path. See "Other MediaTek cards" below for what it would take and how to help; until then SimpleMtkWlan and its forks cover those cards |
 
 ## Compared with SimpleMtkWlan and AirportMtkWlan
@@ -39,7 +41,7 @@ The quickest install is the bundle on the [releases page](../../releases): both 
 Both projects are good work and they cover cards this one does not. The table is from their READMEs as of
 2026-10-29:
 
-| | mt7925-hackintosh-wifi + -native | SimpleMtkWlan (pengubow and forks) | AirportMtkWlan (pengubow, mnnobre, Arxusion) |
+| | WTLMtkWireless + WTLWifiMenu | SimpleMtkWlan (pengubow and forks) | AirportMtkWlan (pengubow, mnnobre, Arxusion) |
 |---|---|---|---|
 | Cards | MT7925, RZ717 | MT7921, MT7921K/RZ608, MT7922, RZ616 | MT7922/RZ616 (pengubow), MT7921/RZ608 (mnnobre), MT7921, RZ608 and MT7922/RZ616 ([Arxusion](https://github.com/Arxusion/AirportMtkWlan)) |
 | How you join a network | macOS's own Wi-Fi menu and System Settings; networks saved by macOS, auto-join at boot, private address per network | the card is an Ethernet port; `mtkwifi join` on the command line, HeliPort "not tested yet", or the SimpleMTK menu-bar client some forks ship | macOS's own Wi-Fi menu (experimental) |
@@ -67,11 +69,11 @@ Everything below was measured on one laptop (Legion 5 15IAX10, OpenCore 1.0.8) o
 | 0.6.0 | HT/VHT association, firmware rate control | macOS 15.4.1 Recovery | 47.4 / 9.2 Mb/s |
 | 0.5.0 | first join, Ethernet interface, DHCP | macOS 15.4.1 Recovery | Safari and an Ookla speedtest: 19.4 / 9.6 Mb/s |
 
-**WPA2 on air:** the WPA2-PSK code passes the host tests in `tests/` (standard test vectors plus simulated handshakes, every derived value checked against an independent Python oracle). I have not joined a WPA2 network on the Legion myself, because the only network where I live is an open one. A tester joined a WPA/WPA2 Personal network from the Wi-Fi menu on an AM5 desktop with an AMD RZ717 card (MtkWlan 0.12.1 and MtkWlanNative 0.4.13), with auto-join at boot and a DHCP lease ([#3](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi-native/issues/3)). More reports are welcome.
+**WPA2 on air:** the WPA2-PSK code passes the host tests in `tests/` (standard test vectors plus simulated handshakes, every derived value checked against an independent Python oracle). I have not joined a WPA2 network on the Legion myself, because the only network where I live is an open one. A tester joined a WPA/WPA2 Personal network from the Wi-Fi menu on an AM5 desktop with an AMD RZ717 card (MtkWlan 0.12.1 and MtkWlanNative 0.4.13), with auto-join at boot and a DHCP lease ([#3](https://github.com/watchthelight-labs/WTLWifiMenu/issues/3)). More reports are welcome.
 
 ## What it can't do
 
-- With this kext alone there is no Wi-Fi menu: macOS sees an Ethernet card and you pick networks with the `mtkwifi` command line tool. There is no Wi-Fi icon, no Wi-Fi pane in System Settings, no AirDrop, no Continuity. The native front end is a second kext, [MtkWlanNative](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi-native) (0.4.15, macOS Tahoe 26.7.1 and 26.7.2), built against the same core ops table: with it the Wi-Fi menu works, macOS runs the scans and joins, saves networks and auto-joins at boot.
+- With this kext alone there is no Wi-Fi menu: macOS sees an Ethernet card and you pick networks with the `mtkwifi` command line tool. There is no Wi-Fi icon, no Wi-Fi pane in System Settings, no AirDrop, no Continuity. The native front end is a second kext, [MtkWlanNative](https://github.com/watchthelight-labs/WTLWifiMenu) (0.4.15, macOS Tahoe 26.7.1 and 26.7.2), built against the same core ops table: with it the Wi-Fi menu works, macOS runs the scans and joins, saves networks and auto-joins at boot.
 - It can't join WPA3-SAE only, WPA2 with PSK-SHA256 only, networks that require management frame protection, WPA (TKIP pairwise) or enterprise (802.1X) networks. `mtkwifi list` marks these.
 - No roaming between access points of one network. No HE (802.11ax) or EHT; the association is VHT at 80 MHz.
 - No sleep and wake handling. The laptop this runs on has sleep disabled.
@@ -87,7 +89,7 @@ The bundle zip from the [releases](../../releases) holds `MtkWlan.kext`, `MtkWla
 
 1. Get `MtkWlan.kext` from the [releases](../../releases) (the release zip carries `LICENSE`, `NOTICE.md` and
    `LICENSES/` because the licences require them next to the binary), or build it (below). For the Wi-Fi menu also get
-   `MtkWlanNative.kext` from [its releases](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi-native/releases)
+   `MtkWlanNative.kext` from [its releases](https://github.com/watchthelight-labs/WTLWifiMenu/releases)
    (macOS 26.7.1 build 25G241 and 26.7.2 build 25G332 only; on Sequoia use the driver alone with the `mtkwifi` tool).
 2. Copy the kext(s) to `EFI/OC/Kexts/` and add them to `config.plist`, `Kernel > Add`, in this order:
 
@@ -133,7 +135,7 @@ The bundle zip from the [releases](../../releases) holds `MtkWlan.kext`, `MtkWla
    ```
 
    `tools/mtkwifi/README.md` has the full command list.
-5. Bluetooth is the same card's USB half and its own kext: [mt7925-hackintosh-bluetooth](https://github.com/watchthelight-labs/mt7925-hackintosh-bluetooth).
+5. Bluetooth is the same card's USB half and its own kext: [WTLMtkBluetooth](https://github.com/watchthelight-labs/WTLMtkBluetooth).
 6. Rollback: set `Enabled` to false on the kext entries, or boot from a backup EFI. The tool's undo lines are in the
    header of `tools/mtkwifi/install.sh`. Nothing is written to NVRAM or firmware.
 
@@ -162,7 +164,7 @@ an ASUS B860 board and, from 0.11.1, on `14c3:0717`, the AMD RZ717 card on AM5 d
 their own firmware files (`WIFI_RAM_CODE_MT7961_1.bin` and the MT7961 patch instead of the MT7925 pair), a few MCU
 commands in the older non-UNI form, and their own TX power tables, and a kext that loads on a card it cannot bring up
 would cost you the Wi-Fi SimpleMtkWlan gives you today. The port is tracked in
-[issue #2](https://github.com/watchthelight-labs/mt7925-hackintosh-wifi/issues/2) with the file-by-file plan; it needs
+[issue #2](https://github.com/watchthelight-labs/WTLMtkWireless/issues/2) with the file-by-file plan; it needs
 a card to test on, so if you have an MT7921 or MT7922 and an OpenCore machine, say so there. If you try the kext on a
 different MT7925 board, I want the result either way:
 
@@ -173,7 +175,7 @@ different MT7925 board, I want the result either way:
    the IO80211 family, the Wi-Fi daemons' log, and the last three kernel panic reports if any. MAC addresses and SSIDs
    are replaced by placeholders (`--no-redact` keeps them; `--minutes N` widens the log window, default 30). Nothing in
    it is a key or passphrase.
-3. Open an issue at github.com/watchthelight-labs/mt7925-hackintosh-wifi/issues with the archive attached and three lines: the card
+3. Open an issue at github.com/watchthelight-labs/WTLMtkWireless/issues with the archive attached and three lines: the card
    (PCI ids), the macOS build (`sw_vers`), and what happened (did the kext load, did `mtkwifi list` show networks, did a
    join get a lease). If the machine panicked, say what was on screen; the report includes the panic file.
 
